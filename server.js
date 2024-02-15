@@ -3,19 +3,19 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/users');
 
 const app = express();
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(express.static('public'))
 // Database connection
 const { mongoURI } = require('./config/database');
-mongoose.connect(mongoURI);
+mongoose.connect(process.env.mongoDB_URL || mongoURI);
 
 //any request http://localhost:300/api/users
 app.use('/api/users', userRoutes)
 // app.use('/api/tasks', userTasks)
-app.post('/newtask', (req, res)=>{});//POST request http://localhost:300/newtask
+app.post('/newtask', (req, res) => { });//POST request http://localhost:300/newtask
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
